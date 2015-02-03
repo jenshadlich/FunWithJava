@@ -1,6 +1,9 @@
 package de.jeha.fwj;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.*;
 
 public class LRUCacheWithSynchronizedLinkedHashMap {
 
@@ -10,6 +13,12 @@ public class LRUCacheWithSynchronizedLinkedHashMap {
         final boolean accessOrder = true;
 
         return Collections.synchronizedMap(new LinkedHashMap<K, V>(initialCapacity, loadfactor, accessOrder) {
+
+            @Override
+            public V put(K key, V value) {
+                System.out.println("put {" + key + "=" + value + "}");
+                return super.put(key, value);
+            }
 
             @Override
             protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
@@ -22,14 +31,45 @@ public class LRUCacheWithSynchronizedLinkedHashMap {
         });
     }
 
-    public static void main(String... args) {
+    static final CountDownLatch LATCH = new CountDownLatch(1);
+
+    public static void main(String... args) throws InterruptedException, BrokenBarrierException {
         final Map<Object, Object> lru = LRUCacheWithSynchronizedLinkedHashMap.lruCache(3);
 
-        for (int i = 1; i <= 6; i++) {
-            final String s = Integer.toString(i);
-            lru.put(s, s);
-        }
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
+        executorService.submit(new PutToCacheRunnable("1", lru));
+        executorService.submit(new PutToCacheRunnable("2", lru));
+        executorService.shutdown();
+
+        LATCH.countDown();
+
+        executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
 
         System.out.println(lru);
+    }
+
+    static class PutToCacheRunnable implements Runnable {
+
+        final String threadId;
+        final Map<Object, Object> cache;
+
+        public PutToCacheRunnable(String threadId, Map<Object, Object> cache) {
+            this.threadId = threadId;
+            this.cache = cache;
+        }
+
+        @Override
+        public void run() {
+            try {
+                LATCH.await();
+                System.out.println("Start thread " + threadId);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            for (int i = 1; i <= 6; i++) {
+                final String s = Integer.toString(i);
+                cache.put(s, threadId + ":" + s);
+            }
+        }
     }
 }
