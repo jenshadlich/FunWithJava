@@ -1,6 +1,5 @@
 package de.jeha.fwj;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.*;
@@ -12,10 +11,10 @@ public class LRUCacheWithSynchronizedLinkedHashMap {
         final float loadfactor = 0.75f;
         final boolean accessOrder = true;
 
-        return Collections.synchronizedMap(new LinkedHashMap<K, V>(initialCapacity, loadfactor, accessOrder) {
+        return new LinkedHashMap<K, V>(initialCapacity, loadfactor, accessOrder) {
 
             @Override
-            public V put(K key, V value) {
+            public synchronized V put(K key, V value) {
                 System.out.println("put {" + key + "=" + value + "}");
                 return super.put(key, value);
             }
@@ -28,7 +27,7 @@ public class LRUCacheWithSynchronizedLinkedHashMap {
                 }
                 return remove;
             }
-        });
+        };
     }
 
     static final CountDownLatch LATCH = new CountDownLatch(1);
