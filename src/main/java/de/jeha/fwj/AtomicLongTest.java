@@ -7,6 +7,7 @@ public class AtomicLongTest {
     static AtomicLong al = new AtomicLong(0);
     static long count, l;
     static final long f = 4_294_967_296L;
+    static final int DEFAULT_COUNT = 20_000;
 
     static void update() {
         l += f;
@@ -20,7 +21,7 @@ public class AtomicLongTest {
     }
 
     static public void main(String... args) {
-        final int n = args.length > 0 ? Integer.parseInt(args[0]) : 20_000;
+        final int n = args.length > 0 ? Integer.parseInt(args[0]) : DEFAULT_COUNT;
 
         for (count = 0; count < n; count++) {
             update();
