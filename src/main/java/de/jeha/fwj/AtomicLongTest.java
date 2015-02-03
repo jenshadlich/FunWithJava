@@ -19,8 +19,10 @@ public class AtomicLongTest {
         }
     }
 
-    static public void main(String args[]) {
-        for (count = 0; count < Integer.parseInt(args[0]); count++) {
+    static public void main(String... args) {
+        final int n = args.length > 0 ? Integer.parseInt(args[0]) : 20_000;
+
+        for (count = 0; count < n; count++) {
             update();
         }
     }
