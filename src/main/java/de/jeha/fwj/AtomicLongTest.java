@@ -6,12 +6,13 @@ public class AtomicLongTest {
 
     static AtomicLong al = new AtomicLong(0);
     static long count, l;
-    static final long f = 4_294_967_296L;
+    static final long F = 4_294_967_296L;
     static final int DEFAULT_COUNT = 20_000;
+    static boolean ok = false, error = false;
 
     static void update() {
-        l += f;
-        al.addAndGet(f);
+        l += F;
+        al.addAndGet(F);
 
         if (l == al.longValue()) {
             printOK();
@@ -27,8 +28,6 @@ public class AtomicLongTest {
             update();
         }
     }
-
-    static boolean ok = false, error = false;
 
     static void printOK() {
         if (!ok) {
