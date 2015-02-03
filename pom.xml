@@ -4,7 +4,7 @@
     <groupId>de.jeha.fwj</groupId>
     <artifactId>fun-with-java</artifactId>
     <name>fun-with-java</name>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <version>0.1-SNAPSHOT</version>
 
     <properties>
