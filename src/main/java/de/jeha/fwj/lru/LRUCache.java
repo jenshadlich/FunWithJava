@@ -6,21 +6,6 @@ import java.util.Map;
 
 public class LRUCache<K, V> {
 
-    static class CacheEntry<K, V> {
-        private final K key ;
-        private final V value;
-
-        public CacheEntry(K key, V value) {
-            this.key= key;
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return "[key=" + key.toString() + ",value=" + value.toString()+"]";
-        }
-    }
-
     private int capacity;
     private Map<K, CacheEntry<K, V>> cache = new HashMap<>();
     private LinkedList<CacheEntry<K, V>> data = new LinkedList<>();
@@ -37,7 +22,7 @@ public class LRUCache<K, V> {
 
         moveToFront(entry);
 
-        return entry.value;
+        return entry.getValue();
     }
 
     public void put(K key, V value) {
@@ -49,7 +34,7 @@ public class LRUCache<K, V> {
             if (cache.size() == capacity) {
                 CacheEntry<K, V> last = data.getLast();
                 System.out.println("Evict " + last);
-                cache.remove(last.key);
+                cache.remove(last.getKey());
                 data.removeLast();
             }
             entry = new CacheEntry<>(key, value);
