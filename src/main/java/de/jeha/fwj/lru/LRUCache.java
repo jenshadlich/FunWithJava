@@ -1,4 +1,4 @@
-package de.jeha.fwj;
+package de.jeha.fwj.lru;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -7,8 +7,8 @@ import java.util.Map;
 public class LRUCache<K, V> {
 
     static class CacheEntry<K, V> {
-        final K key ;
-        final V value;
+        private final K key ;
+        private final V value;
 
         public CacheEntry(K key, V value) {
             this.key= key;
@@ -17,7 +17,7 @@ public class LRUCache<K, V> {
 
         @Override
         public String toString() {
-            return "key=" + key.toString() + ",value=" + value.toString();
+            return "[key=" + key.toString() + ",value=" + value.toString()+"]";
         }
     }
 

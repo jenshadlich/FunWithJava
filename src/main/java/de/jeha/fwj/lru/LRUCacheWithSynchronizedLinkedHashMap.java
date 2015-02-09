@@ -1,4 +1,4 @@
-package de.jeha.fwj;
+package de.jeha.fwj.lru;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
