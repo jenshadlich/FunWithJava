@@ -38,7 +38,7 @@ public class GsonUnserializeTest {
     // -----------------------------------------------------------------------------------------------------------------
 
     static class TestObject {
-        public List<Content> content = new ArrayList<Content>();
+        public List<Content> content = new ArrayList<>();
 
     }
 
