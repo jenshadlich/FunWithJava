@@ -10,6 +10,10 @@ import java.security.Security;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * http://docs.aws.amazon.com/AWSSdkDocsJava/latest//DeveloperGuide/java-dg-jvm-ttl.html
+ * https://docs.oracle.com/javase/8/docs/api/java/net/InetAddress.html
+ */
 public class DnsCache {
 
     public static void main(String[] args) {
