@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
+import java.security.Permission;
 import java.security.Security;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -18,15 +19,25 @@ public class DnsCache {
 
     public static void main(String[] args) {
 
-        final String hostname = "www.spreadshirt.com";
+        final String hostname = "www.google.com";
         final int maxLookups = 1000;
         final long intervalSeconds = 2;
 
+
+        System.setSecurityManager(new SecurityManager(){
+            @Override
+            public void checkPermission(Permission perm) {
+                // do nothing
+            }
+        });
+
+        System.out.println("Has security manager? " + (System.getSecurityManager() == null ? "NO" : "YES"));
+
         // set to "no cache"
-        java.security.Security.setProperty("networkaddress.cache.ttl", "0");
-        java.security.Security.setProperty("networkaddress.cache.negative.ttl", "0");
-        System.setProperty("networkaddress.cache.ttl", "0");
-        System.setProperty("networkaddress.cache.negative.ttl", "0");
+        //java.security.Security.setProperty("networkaddress.cache.ttl", "0");
+        //cd java.security.Security.setProperty("networkaddress.cache.negative.ttl", "0");
+        //System.setProperty("networkaddress.cache.ttl", "0");
+        //System.setProperty("networkaddress.cache.negative.ttl", "0");
 
         System.out.println(Security.getProperty("networkaddress.cache.ttl"));
         System.out.println(System.getProperty("networkaddress.cache.ttl"));
