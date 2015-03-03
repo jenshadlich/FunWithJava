@@ -23,7 +23,6 @@ public class DnsCache {
         final int maxLookups = 1000;
         final long intervalSeconds = 2;
 
-
         System.setSecurityManager(new SecurityManager(){
             @Override
             public void checkPermission(Permission perm) {
