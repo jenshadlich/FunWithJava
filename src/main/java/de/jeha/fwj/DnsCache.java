@@ -1,5 +1,7 @@
 package de.jeha.fwj;
 
+import de.jeha.fwj.security.AllowEverythingSecurityManager;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
@@ -23,13 +25,7 @@ public class DnsCache {
         final int maxLookups = 1000;
         final long intervalSeconds = 2;
 
-        System.setSecurityManager(new SecurityManager(){
-            @Override
-            public void checkPermission(Permission perm) {
-                // do nothing
-            }
-        });
-
+        System.setSecurityManager(new AllowEverythingSecurityManager());
         System.out.println("Has security manager? " + (System.getSecurityManager() == null ? "NO" : "YES"));
 
         // set to "no cache"
