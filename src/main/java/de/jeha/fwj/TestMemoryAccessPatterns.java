@@ -1,5 +1,7 @@
 package de.jeha.fwj;
 
+import java.util.Locale;
+
 public class TestMemoryAccessPatterns {
     private static final int LONG_SIZE = 8;
     private static final int PAGE_SIZE = 2 * 1024 * 1024;
@@ -46,26 +48,25 @@ public class TestMemoryAccessPatterns {
 
     public static void main(final String[] args) {
         final StrideType strideType;
-        switch (Integer.parseInt(args[0])) {
+        switch ((args.length == 0) ? -1 : Integer.parseInt(args[0])) {
             case 1:
                 strideType = StrideType.LINEAR_WALK;
                 break;
-
             case 2:
                 strideType = StrideType.RANDOM_PAGE_WALK;
                 break;
-
             case 3:
                 strideType = StrideType.RANDOM_HEAP_WALK;
                 break;
-
             default:
-                throw new IllegalArgumentException("Unknown StrideType");
+                strideType = StrideType.LINEAR_WALK;
+                System.out.println("no command line argument supplied, use " + strideType + " as default");
         }
 
         for (int i = 0; i < 5; i++) {
             perfTest(i, strideType);
         }
+        System.out.println("done");
     }
 
     private static void perfTest(final int runNumber, final StrideType strideType) {
@@ -89,6 +90,6 @@ public class TestMemoryAccessPatterns {
             throw new IllegalStateException();
         }
 
-        System.out.format("%d - %.2fns %s\n", runNumber, nsOp, strideType);
+        System.out.format(Locale.US, "%d - %.2fns %s\n", runNumber, nsOp, strideType);
     }
 }
