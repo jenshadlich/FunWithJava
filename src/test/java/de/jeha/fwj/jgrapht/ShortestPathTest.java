@@ -9,18 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static de.jeha.fwj.jgrapht.ProcessingState.*;
+import static de.jeha.fwj.jgrapht.ProcessingStateGraph.STATE_GRAPH;
 
 public class ShortestPathTest {
 
     @Test
     public void testDijkstra() {
-        Assert.assertNull(DijkstraShortestPath.findPathBetween(ProcessingStateGraph.STATE_GRAPH, IN_PROGRESS, ACKNOWLEDGED));
+        Assert.assertNull(DijkstraShortestPath.findPathBetween(STATE_GRAPH, IN_PROGRESS, ACKNOWLEDGED));
 
-        List<DefaultEdge> path = DijkstraShortestPath.findPathBetween(ProcessingStateGraph.STATE_GRAPH, NEW, COMPLETED);
+        List<DefaultEdge> path = DijkstraShortestPath.findPathBetween(STATE_GRAPH, NEW, COMPLETED);
         for (DefaultEdge edge : path) {
             // System.out.println(edge.toString());
-            System.out.println(ProcessingStateGraph.STATE_GRAPH.getEdgeSource(edge) + " -> "
-                    + ProcessingStateGraph.STATE_GRAPH.getEdgeTarget(edge));
+            System.out.println(STATE_GRAPH.getEdgeSource(edge) + " -> " + STATE_GRAPH.getEdgeTarget(edge));
         }
     }
 
@@ -34,11 +34,11 @@ public class ShortestPathTest {
     public static List<ProcessingState> interpolate(ProcessingState source, ProcessingState target) {
         List<ProcessingState> interpolatedStates = new ArrayList<ProcessingState>();
         List<DefaultEdge> path = DijkstraShortestPath
-                .findPathBetween(ProcessingStateGraph.STATE_GRAPH, source, target);
+                .findPathBetween(STATE_GRAPH, source, target);
         if (path != null && path.size() > 1) {
             path.remove(0);
             for (DefaultEdge edge : path) {
-                interpolatedStates.add(ProcessingStateGraph.STATE_GRAPH.getEdgeSource(edge));
+                interpolatedStates.add(STATE_GRAPH.getEdgeSource(edge));
             }
         }
         return interpolatedStates;
