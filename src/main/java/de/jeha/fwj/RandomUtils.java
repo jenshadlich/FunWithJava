@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class RandomUtils {
 
-    private static Random GENERATOR = new Random();
+    private static final Random GENERATOR = new Random();
 
     private static <T> T oneOfN(final List<T> list) {
         return list.size() > 1
