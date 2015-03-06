@@ -4,13 +4,20 @@ import java.util.*;
 
 public class RadarCoordinateCalculator {
 
+    private final int ringSize = 100;
+    private final int minDistance = 10; // TODO
+    // rings
+    private final List<String> rings = Arrays.asList("r1", "r2", "r3", "r4");
+    // sections: if 4 = quadrants
+    private final List<String> sections = Arrays.asList("q1", "q2", "q3", "q4");
+
+    private final List<Entry> data;
+
+    public RadarCoordinateCalculator(List<Entry> data) {
+        this.data = data;
+    }
+
     public static void main(String... args) {
-        int ringSize = 100;
-        int minDistance = 10; // TODO
-        // rings
-        List<String> rings = Arrays.asList("r1", "r2", "r3", "r4");
-        // sections: if 4 = quadrants
-        List<String> sections = Arrays.asList("q1", "q2", "q3", "q4");
 
         List<Entry> data = new ArrayList<>();
         data.add(new Entry("q1", "r1", "a"));
@@ -25,6 +32,14 @@ public class RadarCoordinateCalculator {
         data.add(new Entry("q4", "r4", "j"));
         data.add(new Entry("q4", "r4", "k"));
 
+        new RadarCoordinateCalculator(data).run();
+    }
+
+    private String getKey(String section, String ring) {
+        return section + "-" + ring;
+    }
+
+    public Map<Entry, Result> run() {
         Map<String, List<Entry>> dataMap = new HashMap<>();
         for (Entry e : data) {
             String key = getKey(e.section, e.ring);
@@ -38,6 +53,8 @@ public class RadarCoordinateCalculator {
         int sectionSize = 360 / sections.size();
         int sectionPadding = 10;
         System.out.println(sectionSize);
+
+        Map<Entry, Result> result = new HashMap<>();
         for (String section : sections) {
             for (String ring : rings) {
                 String key = getKey(section, ring);
@@ -55,23 +72,31 @@ public class RadarCoordinateCalculator {
                         //System.out.println(" rOffset=" + rOffset);
                         //System.out.println(" sOffset=" + sOffset);
                         System.out.println("  r=" + r + ", s=" + s);
+                        result.put(e, new Result(r, s));
                         i++;
                     }
                 }
             }
         }
+        return result;
     }
 
-    private static String getKey(String section, String ring) {
-        return section + "-" + ring;
+    public static class Result {
+        final int r;
+        final int s;
+
+        public Result(int r, int s) {
+            this.r = r;
+            this.s = s;
+        }
     }
 
-    private static class Entry {
+    public static class Entry {
         final String section;
         final String ring;
         final String name;
 
-        private Entry(String section, String ring, String name) {
+        public Entry(String section, String ring, String name) {
             this.section = section;
             this.ring = ring;
             this.name = name;
