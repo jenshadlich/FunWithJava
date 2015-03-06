@@ -10,16 +10,20 @@ public class RadarCoordinateCalculator {
         // rings
         List<String> rings = Arrays.asList("r1", "r2", "r3", "r4");
         // sections: if 4 = quadrants
-        List<String> sections = Arrays.asList("q1", "q2", "q3", "q3");
+        List<String> sections = Arrays.asList("q1", "q2", "q3", "q4");
 
         List<Entry> data = new ArrayList<>();
         data.add(new Entry("q1", "r1", "a"));
         data.add(new Entry("q1", "r1", "b"));
-        data.add(new Entry("q1", "r2", "c"));
-        data.add(new Entry("q2", "r1", "d"));
+        data.add(new Entry("q1", "r1", "c"));
+        data.add(new Entry("q1", "r2", "d"));
         data.add(new Entry("q2", "r1", "e"));
-        data.add(new Entry("q3", "r3", "f"));
-        data.add(new Entry("q4", "r4", "g"));
+        data.add(new Entry("q2", "r1", "f"));
+        data.add(new Entry("q3", "r3", "g"));
+        data.add(new Entry("q4", "r4", "h"));
+        data.add(new Entry("q4", "r4", "i"));
+        data.add(new Entry("q4", "r4", "j"));
+        data.add(new Entry("q4", "r4", "k"));
 
         Map<String, List<Entry>> dataMap = new HashMap<>();
         for (Entry e : data) {
@@ -45,8 +49,8 @@ public class RadarCoordinateCalculator {
                         int rOffset = rings.indexOf(e.ring) * ringSize;
                         int sOffset = sections.indexOf(e.section) * sectionSize;
                         int r = rOffset + (ringSize / 2); // place in the center of the ring
-                        int sDelta = (sectionSize - sectionPadding * 2) / items.size();
-                        int s = sOffset + sectionPadding + i * sDelta;
+                        int sDelta = (sectionSize - (sectionPadding * 2)) / items.size();
+                        int s = sOffset + sectionPadding + i * sDelta + (sectionSize - 2 * sectionPadding) / 4;
                         System.out.println(" " + e.name);
                         //System.out.println(" rOffset=" + rOffset);
                         //System.out.println(" sOffset=" + sOffset);
