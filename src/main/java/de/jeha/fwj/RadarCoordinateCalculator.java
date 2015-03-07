@@ -67,7 +67,12 @@ public class RadarCoordinateCalculator {
                         int sOffset = sections.indexOf(e.section) * sectionSize;
                         int r = rOffset + (ringSize / 2); // place in the center of the ring
                         int sDelta = (sectionSize - (sectionPadding * 2)) / items.size();
-                        int s = sOffset + sectionPadding + i * sDelta + (sectionSize - 2 * sectionPadding) / 4;
+                        final int s;
+                        if (items.size() > 1) {
+                            s = sOffset + sectionPadding + i * sDelta + (sectionSize - 2 * sectionPadding) / 4;
+                        }else {
+                            s = sOffset + (sectionSize / 2);
+                        }
                         System.out.println(" " + e.name);
                         //System.out.println(" rOffset=" + rOffset);
                         //System.out.println(" sOffset=" + sOffset);
