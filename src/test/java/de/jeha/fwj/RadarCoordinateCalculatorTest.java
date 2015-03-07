@@ -4,7 +4,6 @@ import de.jeha.fwj.RadarCoordinateCalculator.Entry;
 import de.jeha.fwj.RadarCoordinateCalculator.Result;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
