@@ -23,7 +23,7 @@ public class GsonUnserializeTest {
         assertEquals(EXPECTED_DATE_CREATED, o.content.get(0).dateCreated);
     }
 
-    @Test(expected = JsonSyntaxException.class)
+    @Test
     public void testWithGsonBuilderAndTypeAdapter() {
         GsonBuilder gsonBuilder = new GsonBuilder().serializeNulls().registerTypeAdapter(TestObject.class,
                 new TestObjectDeserializer());
