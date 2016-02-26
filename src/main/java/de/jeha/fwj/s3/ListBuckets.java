@@ -13,6 +13,8 @@ import java.io.IOException;
 
 /**
  * @author jenshadlich@googlemail.com
+ *
+ * Tested with a local minio server.
  */
 public class ListBuckets {
 
